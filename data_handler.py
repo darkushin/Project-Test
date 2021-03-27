@@ -291,6 +291,7 @@ class DataHandler(data.Dataset):
         shift_prob = self.config['data']['params']['augmentation_params']['shift']['probability']
         probabilities = [within_prob, across_prob, shift_prob]
         probabilities = [i / sum(probabilities) for i in probabilities]  # normalize probabilities
+        print(f'PROBABILITIES: {probabilities}\n\n')
         augmentation_num = np.random.choice(3, p=probabilities)
         return augment_dict[augmentation_num]
 

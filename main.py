@@ -42,6 +42,8 @@ def main():
     # call train - provide a data_handler object to provide (lr,hr) tuples
     network.train(data_generator, scale)
 
+    output = network.eval(dataset.video_tensor)
+
     # save final result in "output" folder
     final_output_dir = os.path.join(config['trainer']['working_dir'], 'output')
     utils.save_output_result(output, final_output_dir)
