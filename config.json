@@ -62,7 +62,7 @@
         },
         "across": {
 		//Parameters for "across dimension" training examples. See paper.
-		  "probability": 0,
+		  "probability": 0.4,
 		  "prob_ver_new_z": 0.5,
 		  "prob_hor_new_z": 0.5,
 		  "new_z_sample_range": [1, 2],
