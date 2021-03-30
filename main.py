@@ -22,7 +22,7 @@ def main():
               'shuffle': True,
               'num_workers': 0,
               'worker_init_fn': worker_init_fn}
-    cur_data_path = './Example-Data/billiard'
+    cur_data_path = config['data']['params']['frames_folder']
 
     output = None
     scale = 2
