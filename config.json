@@ -34,7 +34,7 @@
   "dtype": "float32",
   "data": {
     "params": {
-      "frames_folder": "./Example_data/blur8/billiard",
+      "frames_folder": "./Example-Data/eagle_lr_x_swapped",
 	  //Input frames folder
       "prefix": "",
 	  //If frame names containg prefix, such as "frame00020.png", "prefix" needs to be "frame"
