@@ -21,7 +21,7 @@
   //"base" or "residual". The paper's results are with "residual" (Network's ouput is added to naive upsampling), "base" uses ConvTranspose3d instead.
   "res3d_up_method": "resize",
   //method to upsample temporally to use as input add residual to. "resize"-linear/cubic resize, "duplicate"-duplicates frames, "zero_gap"-adds empty frame/s after each real one.
-  "num_epochs": 50000,
+  "num_epochs": 5,
   "fine_tuning_epochs_factor": 2,
   //factor to divide "num_epochs" by when fine-tuning. Note: divides by this factor for EACH fine-tuning iteration.
   "num_iter_per_epoch": 10,
@@ -34,7 +34,7 @@
   "dtype": "float32",
   "data": {
     "params": {
-      "frames_folder": "./Example-Data/eagle_lr_x_swapped",
+      "frames_folder": "./Example-Data/Horse_swapped_lr",
 	  //Input frames folder
       "prefix": "",
 	  //If frame names containg prefix, such as "frame00020.png", "prefix" needs to be "frame"
