@@ -34,7 +34,7 @@
   "dtype": "float32",
   "data": {
     "params": {
-      "frames_folder": "./Example-Data/Horse_swapped_lr",
+      "frames_folder": "./Example-Data/Horse_short_swapped_lr",
 	  //Input frames folder
       "prefix": "",
 	  //If frame names containg prefix, such as "frame00020.png", "prefix" needs to be "frame"
