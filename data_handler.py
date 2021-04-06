@@ -306,6 +306,7 @@ class DataHandler(data.Dataset):
         corner[2]:corner[2] + crop_size[2], :] = cur_vals
 
     def across_dims_decide_new_z_axis(self):
+        raise Exception('Trying to create an across training pair - SHOULD NOT REACH THIS PART IN THIS TEST!')
         prob_ver_new_z = self.config['data']['params']['augmentation_params']['across']['prob_ver_new_z']
         prob_hor_new_z = self.config['data']['params']['augmentation_params']['across']['prob_hor_new_z']
         probabilities = [prob_ver_new_z, prob_hor_new_z]
