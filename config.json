@@ -65,7 +65,7 @@
         },
         "across": {
 		//Parameters for "across dimension" training examples. See paper.
-		  "probability": 0,
+		  "probability": 0.4,
 		  "prob_ver_new_z": 0.5,
 		  "prob_hor_new_z": 0.5,
 		  "new_z_sample_range": [1, 2],
@@ -81,7 +81,7 @@
           "range_hor": [-1, 1],
 		  "range_ver": [-1, 1],
 		  "entire_pixels": true,
-		  "prob_for_across": 0,
+		  "prob_for_across": 0.3,
 		  //probability the shifted crop will be permuted and used as across example. Else, as within.
 		  "flip_prob": 0.3,
 		  "rotation_prob": 0.5,

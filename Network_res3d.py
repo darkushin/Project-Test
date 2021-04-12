@@ -66,7 +66,7 @@ class Network_residual(Network):  # Network with residual after bilinear
                 if residual_base == 'resize':
                     self.resizer = torch_resizer.Resizer(x.shape, scale_factor=(1, 1, self.upsample_scale, 1, 1),
                                                          output_shape=[x.shape[0], x.shape[1], x.shape[2] * self.upsample_scale, x.shape[3], x.shape[4]],
-                                                         kernel='cubic', antialiasing=True, device='cpu')
+                                                         kernel='cubic', antialiasing=True, device='cuda')
                     x_upsampled = self.resizer(x)
                     x = self.resizer(x)
 
