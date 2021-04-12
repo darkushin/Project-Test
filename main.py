@@ -40,7 +40,7 @@ def main():
         assert False, f'assertion fail at main, not a known "network_class"'
 
     # call train - provide a data_handler object to provide (lr,hr) tuples
-    # network.train(data_generator, scale)
+    network.train(data_generator, scale)
 
     output = network.eval(dataset.video_tensor)
 

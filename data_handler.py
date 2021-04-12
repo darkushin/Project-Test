@@ -306,7 +306,7 @@ class DataHandler(data.Dataset):
         corner[2]:corner[2] + crop_size[2], :] = cur_vals
 
     def across_dims_decide_new_z_axis(self):
-        raise Exception('Trying to create an across training pair - SHOULD NOT REACH THIS PART IN THIS TEST!')
+        # raise Exception('Trying to create an across training pair - SHOULD NOT REACH THIS PART IN THIS TEST!')
         prob_ver_new_z = self.config['data']['params']['augmentation_params']['across']['prob_ver_new_z']
         prob_hor_new_z = self.config['data']['params']['augmentation_params']['across']['prob_hor_new_z']
         probabilities = [prob_ver_new_z, prob_hor_new_z]
@@ -426,6 +426,10 @@ class DataHandler(data.Dataset):
         z_flip_prob = self.config['data']['params']['augmentation_params']['across']['new_z_flip_prob']
         hr_tensor = augmentations.flip_rotate_tensor(hr_tensor, flip_prob, rotation_prob, z_flip_prob)
 
+        # TPS augmentation:
+        tps_prob = self.config['data']['params']['augmentation_params']['across']['tps_prob']
+        hr_tensor = augmentations.tps_tensor(hr_tensor, tps_prob)
+
         lr_tensor = self.hr_to_lr(hr_tensor, self.upsample_scale)
         return (hr_tensor, lr_tensor)
 
@@ -493,6 +497,11 @@ class DataHandler(data.Dataset):
         rotation_prob = self.config['data']['params']['augmentation_params']['within']['rotation_prob']
         z_flip_prob = self.config['data']['params']['augmentation_params']['within']['z_flip_prob']
         hr_tensor = augmentations.flip_rotate_tensor(hr_tensor, flip_prob, rotation_prob, z_flip_prob)
+
+        # TPS augmentation:
+        tps_prob = self.config['data']['params']['augmentation_params']['within']['tps_prob']
+        hr_tensor = augmentations.tps_tensor(hr_tensor, tps_prob)
+
         lr_tensor = self.hr_to_lr(hr_tensor, self.upsample_scale)
 
         return (hr_tensor, lr_tensor)
@@ -587,6 +596,10 @@ class DataHandler(data.Dataset):
             rotation_prob = 0.0  # to not mix hor and ver. as one will be temporal
         z_flip_prob = self.config['data']['params']['augmentation_params']['shift']['z_flip_prob']
         hr_tensor = augmentations.flip_rotate_tensor(hr_tensor, flip_prob, rotation_prob, z_flip_prob)
+
+        # TPS augmentation:
+        tps_prob = self.config['data']['params']['augmentation_params']['shift']['tps_prob']
+        hr_tensor = augmentations.tps_tensor(hr_tensor, tps_prob)
 
         if across_flag:  # need to permute, to use as across
             hr_tensor = np.transpose(hr_tensor, permutation)

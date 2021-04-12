@@ -3,6 +3,8 @@ from scipy import ndimage
 import math
 import torch_resizer
 import torch
+import tps_warp
+import utils
 
 def shift_frame(input_frame, shift_per_frame_ver, shift_per_frame_hor, z_len, valid_flag=False):
     """
@@ -166,3 +168,47 @@ def blur_sample_tensor(input_tensor, sample_axis, sample_jump, blur_flag=False):
         return sampled_tensor
     else:
         assert False, f'assertion error in blur_sample_tensor, blur_flag not valid: {blur_flag}'
+
+
+def tps_tensor(input_tensor, tps_prob):
+    tps_flag = np.random.choice([0, 1], p=[1 - tps_prob, tps_prob])
+    out_tensor = np.empty_like(input_tensor)
+    if tps_flag:
+        # iterate over all images and for each image apply tps warp:
+        for t in range(input_tensor.shape[0]):  # todo: check that this is the time dim
+            tps_params = get_tps_params(input_tensor[t, :, :, :])
+            out_tensor[t, :, :, :] = apply_tps(input_tensor[t, :, :, :], tps_params['tps'])
+
+    return out_tensor
+
+
+def get_tps_params(input_im):
+    w, h, _ = input_im.shape
+    np_im = np.array(input_im)
+    src = tps_warp._get_regular_grid(np_im,
+                                     points_per_dim=3)
+    dst = tps_warp._generate_random_vectors(np_im, src, scale=0.1 * w)
+    return {
+        'tps': {
+            'src': src,
+            'dst': dst
+        }
+    }
+
+
+def apply_tps(img, tps_params):
+    np_im = np.array(img)
+    np_im = tps_warp.tps_warp_2(np_im, tps_params['dst'], tps_params['src'])
+    return np_im
+
+
+def tps_debug(data_path):
+    prefix = ''
+    dtype = 'float32'
+    video_tensor = np.asarray(utils.read_seq_from_folder(data_path, prefix, dtype))
+    video_tensor = video_tensor[:5, :, :, :]
+
+    hr_tensor = tps_tensor(video_tensor, 1)
+
+
+# tps_debug('/Users/darkushin/Desktop/Project/Project-Test/Example-Data/billiard')
