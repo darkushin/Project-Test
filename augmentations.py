@@ -178,7 +178,8 @@ def tps_tensor(input_tensor, tps_prob):
         for t in range(input_tensor.shape[0]):  # todo: check that this is the time dim
             tps_params = get_tps_params(input_tensor[t, :, :, :])
             out_tensor[t, :, :, :] = apply_tps(input_tensor[t, :, :, :], tps_params['tps'])
-
+    else:
+        out_tensor = input_tensor
     return out_tensor
 
 
