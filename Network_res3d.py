@@ -3,6 +3,7 @@ import torch.nn as nn
 import torch_resizer
 from Network import Network
 from augmentations import *
+from fourier import double_frames_fourier
 
 class Network_residual(Network):  # Network with residual after bilinear
     def __init__(self, config, device, upsample_scale):
@@ -64,11 +65,13 @@ class Network_residual(Network):  # Network with residual after bilinear
             def forward(self, x):
                 residual_base = self.config["res3d_up_method"]  # 'resize' 'duplicate' 'zero_gap'
                 if residual_base == 'resize':
-                    self.resizer = torch_resizer.Resizer(x.shape, scale_factor=(1, 1, self.upsample_scale, 1, 1),
-                                                         output_shape=[x.shape[0], x.shape[1], x.shape[2] * self.upsample_scale, x.shape[3], x.shape[4]],
-                                                         kernel='cubic', antialiasing=True, device='cuda')
-                    x_upsampled = self.resizer(x)
-                    x = self.resizer(x)
+                    # self.resizer = torch_resizer.Resizer(x.shape, scale_factor=(1, 1, self.upsample_scale, 1, 1),
+                    #                                      output_shape=[x.shape[0], x.shape[1], x.shape[2] * self.upsample_scale, x.shape[3], x.shape[4]],
+                    #                                      kernel='cubic', antialiasing=True, device='cpu')
+                    # x_upsampled = self.resizer(x)
+                    x_upsampled = double_frames_fourier(x)
+                    x = double_frames_fourier(x)
+                    # x = self.resizer(x)
 
                 elif residual_base == 'duplicate':
                     x_upsampled = torch.nn.functional.interpolate(
