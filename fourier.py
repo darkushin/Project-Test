@@ -18,7 +18,7 @@ def display_im(im, title):
     plt.show()
 
 
-def double_frames_fourier(imgs):
+def double_frames_fourier(imgs, device):
     """
     Double the number of frames (in time) of the given tensor.
     Input format should be (Batch_Size, Channels, T, H, W)
@@ -40,6 +40,6 @@ def double_frames_fourier(imgs):
     # spatial domain:
     inv_img = np.fft.ifftn(f_scaled_shifted)  # inverse F.T.
     filtered_img = np.abs(inv_img)
-    torch_imgs = torch.from_numpy(filtered_img)
+    torch_imgs = torch.tensor(filtered_img, dtype=torch.float32, device=device)
     return torch_imgs
 
